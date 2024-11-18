@@ -5,6 +5,7 @@ import org.example.pages.RegisterPage;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
 
 import static org.example.UserGenerator.getRandom;
 import static org.example.pages.BasePage.PAGE_LOGIN;
@@ -37,7 +38,7 @@ public class RegistrationPageTest extends BasePageTest {
     public void registerNewUserTest() {
         driver.get(PAGE_REGISTER);
         registerPage.signUpNewUser(user.getName(), user.getEmail(), user.getPassword());
-        registerPage.sleep(1000);
+        registerPage.waitForElementToBeVisible(driver, By.xpath(".//button[text() = 'Войти']"), 2);
         checkCurrentLink(PAGE_LOGIN);
     }
 
@@ -46,7 +47,7 @@ public class RegistrationPageTest extends BasePageTest {
     public void registerErrorForIncorrectPassword() {
         driver.get(PAGE_REGISTER);
         registerPage.signUpNewUser(user.getName(), user.getEmail(), "54321");
-        registerPage.sleep(1000);
+        registerPage.waitForElementToBeVisible(driver, By.xpath(".//p[text()='Некорректный пароль']"), 2);
         String errorMessage = registerPage.getErrorMessageText();
         Assert.assertEquals("Некорректный пароль", errorMessage);
     }

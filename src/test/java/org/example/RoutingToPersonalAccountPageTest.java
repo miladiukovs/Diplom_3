@@ -7,6 +7,7 @@ import org.example.pages.LogoutPage;
 import org.example.pages.RoutingToPersonalAccountPage;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
 
 import static org.example.RestClient.BASE_URL;
 import static org.example.UserGenerator.getRandom;
@@ -40,14 +41,14 @@ public class RoutingToPersonalAccountPageTest extends BasePageTest {
     }
 
     @Test
-    @DisplayName("выход по кнопке «Выйти» в личном кабинете")
+    @DisplayName("Проверка перехода в личный кабинет")
     public void routingToPersonalAccountPageTest() {
         driver.get(BASE_URL);
         loginPage.clickLoginToAccountButton();
         loginPage.login(user.getEmail(), user.getPassword());
-        routingToPersonalAccountPage.sleep(1000);
+        routingToPersonalAccountPage.waitForElementToBeVisible(driver, By.xpath(".//p[text()='Личный Кабинет']/parent::a"), 10);
         routingToPersonalAccountPage.clickPersonalAccountButton();
-        routingToPersonalAccountPage.sleep(1000);
+        routingToPersonalAccountPage.waitForElementToBeVisible(driver, By.xpath("//*[contains(text(), 'Профиль')]"), 10);
         checkCurrentLink(PAGE_PROFILE);
     }
 }

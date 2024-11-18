@@ -12,8 +12,7 @@ public class BasePageTest {
     @Before
     public void setUp() {
         Browsers browsers = new Browsers();
-        driver = browsers.getWebDriver("chrome");
-        //driver = browsers.getWebDriver("firefox");
+        driver = browsers.getWebDriver();
     }
 
     @After

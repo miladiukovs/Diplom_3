@@ -5,6 +5,7 @@ import io.restassured.response.ValidatableResponse;
 import org.example.pages.LoginPage;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
 
 import static org.example.RestClient.BASE_URL;
 import static org.example.UserGenerator.getRandom;
@@ -36,11 +37,12 @@ public class LoginPageTest extends BasePageTest {
     @DisplayName("вход по кнопке «Войти в аккаунт» на главной")
     public void loginUserByLoginToAccountButton() {
         driver.get(BASE_URL);
+        loginPage.waitForElementToBeVisible(driver, By.xpath(".//button[text() = 'Войти в аккаунт']"), 2);
         loginPage.clickLoginToAccountButton();
         loginPage.login(user.getEmail(), user.getPassword());
-        loginPage.sleep(1000);
+        loginPage.waitForElementToBeVisible(driver, By.xpath(".//p[text()='Личный Кабинет']/parent::a"), 2);
         loginPage.clickPersonalAccountButton();
-        loginPage.sleep(2000);
+        loginPage.waitForElementToBeVisible(driver, By.xpath("//*[contains(text(), 'Профиль')]"), 10);
         checkCurrentLink(PAGE_PROFILE);
     }
 
@@ -48,11 +50,12 @@ public class LoginPageTest extends BasePageTest {
     @DisplayName("вход через кнопку «Личный кабинет»")
     public void loginUserByPersonalAccountButton() {
         driver.get(BASE_URL);
+        loginPage.waitForElementToBeVisible(driver, By.xpath(".//p[text()='Личный Кабинет']/parent::a"), 10);
         loginPage.clickPersonalAccountButton();
         loginPage.login(user.getEmail(), user.getPassword());
-        loginPage.sleep(1000);
+        loginPage.waitForElementToBeVisible(driver, By.xpath(".//p[text()='Личный Кабинет']/parent::a"), 10);
         loginPage.clickPersonalAccountButton();
-        loginPage.sleep(2000);
+        loginPage.waitForElementToBeVisible(driver, By.xpath("//*[contains(text(), 'Профиль')]"), 10);
         checkCurrentLink(PAGE_PROFILE);
     }
 
@@ -61,11 +64,10 @@ public class LoginPageTest extends BasePageTest {
     public void loginUserByRegisterButton() {
         driver.get(PAGE_REGISTER);
         loginPage.clickLoginFromRegistrationForm();
-        loginPage.sleep(1000);
         loginPage.login(user.getEmail(), user.getPassword());
-        loginPage.sleep(1000);
+        loginPage.waitForElementToBeVisible(driver, By.xpath(".//p[text()='Личный Кабинет']/parent::a"), 2);
         loginPage.clickPersonalAccountButton();
-        loginPage.sleep(2000);
+        loginPage.waitForElementToBeVisible(driver, By.xpath("//*[contains(text(), 'Профиль')]"), 2);
         checkCurrentLink(PAGE_PROFILE);
     }
 
@@ -74,11 +76,10 @@ public class LoginPageTest extends BasePageTest {
     public void loginUserByForgotPasswordButton() {
         driver.get(PAGE_FORGOT_PASSWORD);
         loginPage.clickLoginFromRegistrationForm();
-        loginPage.sleep(1000);
         loginPage.login(user.getEmail(), user.getPassword());
-        loginPage.sleep(1000);
+        loginPage.waitForElementToBeVisible(driver, By.xpath(".//p[text()='Личный Кабинет']/parent::a"), 2);
         loginPage.clickPersonalAccountButton();
-        loginPage.sleep(2000);
+        loginPage.waitForElementToBeVisible(driver, By.xpath("//*[contains(text(), 'Профиль')]"), 2);
         checkCurrentLink(PAGE_PROFILE);
     }
 }

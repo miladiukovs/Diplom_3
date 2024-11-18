@@ -6,6 +6,7 @@ import org.example.pages.LoginPage;
 import org.example.pages.LogoutPage;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
 
 import static org.example.RestClient.BASE_URL;
 import static org.example.UserGenerator.getRandom;
@@ -44,9 +45,9 @@ public class LogoutPageTest extends BasePageTest {
         loginPage.clickLoginToAccountButton();
         loginPage.login(user.getEmail(), user.getPassword());
         loginPage.clickPersonalAccountButton();
-        logoutPage.sleep(1000);
+        loginPage.waitForElementToBeVisible(driver, By.xpath("//*[contains(text(), 'Профиль')]"), 10);
         logoutPage.clickLogoutButton();
-        logoutPage.sleep(2000);
+        logoutPage.waitForElementToBeVisible(driver, By.xpath(".//button[text()='Войти']"), 10);
         checkCurrentLink(PAGE_LOGIN);
     }
 }
